@@ -17,7 +17,7 @@ import environ
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env()
-environ.Env.read_env(env_file=str(BASE_DIR / "blog" / ".env"))
+environ.Env.read_env(env_file=str(BASE_DIR / "assos" / ".env"))
 
 
 # Quick-start development settings - unsuitable for production
@@ -146,4 +146,4 @@ LOGOUT_REDIRECT_URL='index'
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = BASE_DIR / 'mediafiles'
+MEDIA_ROOT = BASE_DIR / 'media'
