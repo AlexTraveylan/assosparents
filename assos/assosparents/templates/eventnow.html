@@ -1,0 +1,110 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container-fluid">
+  <div class="row bg-1">
+    <div class="row py-2">
+      <div class="col-12 text-center">
+        <h2 class="text-light"><strong>Evenement en cours</strong></h2>
+        <h6 class="text-light"><em>{{asso.name}}</em></h6>
+        {% if role > 2 %}
+        <a class="text-4" href="{% url 'eventnow_create' asso.id %}">
+          Creer un nouvel evenement</a
+        >
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    {% load static %}
+    <div class="col-12 py-2">
+      <img
+        class="rounded mx-auto d-block"
+        src="{% static 'undraw_Events_re_98ue.png' %}"
+        height="200px"
+      />
+    </div>
+  </div>
+
+  {% if datas %} {% for data in datas %}
+
+  <div id="{{data.0.id}}eventnow" class="row">
+    <div class="col p-3">
+      <span></span>
+    </div>
+  </div>
+
+  <div class="row bg-1">
+    <!-- #tableau datas -> [[]] avec pour chaque array du tableau :
+#0 -> event (evennow from assosparents.models)
+#1 -> participants
+#2 -> message pour le bouton -->
+
+    <div class="col-12 text-center py-3">
+      <h4 class="text-light"><strong>{{ data.0.title }}</strong></h4>
+      <p class="text-light">{{ data.0.text}}</p>
+    </div>
+
+    {% if data.0.file != '' %}
+    <div class="col-12 col-md-6 text-center">
+      <a href="{{ data.0.file.url }}">Fichier</a>
+    </div>
+    {% endif %} {% if data.0.image != '' %}
+    <div class="col-12 col-md-6 text-center">
+      <img src="{{ data.0.image.url }}" />
+    </div>
+    {% endif %}
+
+    <div class="col-12 text-center">
+      <h6 class="bg-1 text-5">
+        L'évenement aura lieu le {{data.0.date_event}} à {{data.0.time_event}} à
+        {{ data.0.location }}
+      </h6>
+      <p class="bg-1 text-3 fs-micro">
+        Publié par {{ data.0.author }} le {{ data.0.time_published }}
+      </p>
+    </div>
+
+    <div class="col-12 text-center">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item bg-1 text-light">
+          <strong>Liste les participants :</strong>
+          <ul class="list-group list-group-flush">
+            {% for participant in data.1 %}
+            <li class="list-group-item bg-1 text-light">
+              {{ participant.first_name }} {{participant.last_name}}
+              ({{participant.username}})
+            </li>
+            {% endfor %}
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <!-- bouton participer ou ne pas participer -->
+    <div class="col-12 text-center py-3">
+      <form method="post" action="#{{data.0.id}}eventnow">
+        {% csrf_token %}
+        <input
+          class="btn btn-secondary"
+          type="submit"
+          name="{{ data.0.id }}"
+          value="{{ data.2 }}"
+        />
+      </form>
+    </div>
+
+    {% if role > 2 %}
+    <div class="col-12 text-center">
+      <a
+        class="text-4 fs-micro"
+        href="{% url 'eventnow_edit' asso.id data.0.id %}"
+        >Modifier</a
+      >
+    </div>
+    {% endif %}
+  </div>
+
+  {% endfor %} {% endif %}
+</div>
+{% endblock %}

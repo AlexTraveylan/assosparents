@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 py-3 text-center bg-1">
+      <h2 class="text-light">
+        <strong>Création d'un événement</strong>
+      </h2>
+      <h6 class="text-light"><em>{{asso.name}}</em></h6>
+    </div>
+
+    <div class="col-12 py-3 text-center">
+      {% load static %}
+      <img
+        class="rounded mx-auto d-block"
+        src="{% static 'eventnow.png' %}"
+        height="200px"
+      />
+    </div>
+
+    <div class="col-12 py-3 px-0 text-center">
+      <form
+        class="bg-1 p-3 text-light"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        {% csrf_token %} {{ form.as_p }}
+        <input
+          class="btn btn-secondary"
+          type="submit"
+          value="Créer cet événement"
+        />
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

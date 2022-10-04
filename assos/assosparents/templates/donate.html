@@ -1,0 +1,33 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 py-3 text-center bg-1">
+      <h2 class="text-light">
+        <strong>Faire un don a l'association</strong>
+      </h2>
+      <h6 class="text-light"><em>{{asso.name}}</em></h6>
+    </div>
+
+    <div class="col-12 py-3 text-center">
+      {% load static %}
+      <img
+        class="rounded mx-auto d-block"
+        src="{% static '404.png' %}"
+        height="200px"
+      />
+    </div>
+
+    <div class="col-12 py-3 px-0 text-center bg-1">
+      <h2 class="text-light">
+        <strong>Fonction pas encore disponible</strong>
+      </h2>
+      <p class="text-light">
+        Désolé, notre association n'a pas de compte bancaire pour faire les
+        tests necessaires et mettre en place ici cette fonction
+      </p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

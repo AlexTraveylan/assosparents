@@ -1,0 +1,52 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 text-center bg-1 py-3">
+      <h2 class="text-light">
+        <strong>Liste des membres</strong>
+      </h2>
+      <h5 class="text-light">
+        <em>{{asso.name}}</em>
+      </h5>
+      <p class="fs-micro text-3">
+        <em>{{members.count}} membre{{members.count|pluralize}}</em>
+      </p>
+    </div>
+
+    <!-- Bouton pour rejoindre l'association -->
+    {% if role < 3 %}
+    <div class="col-12 text-center py-3">
+      <form action="" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-secondary">
+          {{ btn_message }}
+        </button>
+      </form>
+    </div>
+    {% endif %}
+
+    <div class="col-12 py-2">
+      {% load static %}
+      <img
+        class="rounded mx-auto d-block"
+        src="{% static 'bemember.png' %}"
+        height="200px"
+      />
+    </div>
+
+    <div class="col-12 text-center bg-1 py-2">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item bg-1 text-light">
+          <strong>Président : {{ asso.president}}</strong>
+        </li>
+        {% for member in members %}
+        <li class="list-group-item bg-1 text-light">
+          {{ member.first_name }} {{ member.last_name }} ({{ member.username }})
+        </li>
+      </ul>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

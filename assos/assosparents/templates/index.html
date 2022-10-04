@@ -1,0 +1,87 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 text-center bg-1">
+      <h1 class="text-light">
+        <strong>
+          Salut, voici un site pour créer ton propre site pour ton association
+          de parents d'élèves</strong
+        >
+      </h1>
+    </div>
+
+    {% load static %}
+    <div class="col-12 py-2">
+      <img
+        class="rounded mx-auto d-block"
+        src="{% static 'bemember.png' %}"
+        height="200px"
+      />
+    </div>
+
+    <div class="col-12 text-center bg-1 py-2">
+      <p class="text-light">
+        C'est super facile : Lorem ipsum, dolor sit amet consectetur adipisicing
+        elit. Sint iusto accusantium dolores voluptatem dolore tenetur aperiam
+        odit illum quidem corrupti maxime suscipit, ducimus, vel facilis vero
+        adipisci ab ad cupiditate hic. Nam aspernatur iusto adipisci fugiat
+        aperiam? Ut consequuntur, asperiores quae minima natus doloribus ex quod
+        velit earum officiis! Facilis.
+      </p>
+    </div>
+
+    <div class="col-12 bg-body py-3">
+      <span></span>
+    </div>
+
+    <div class="col-12 text-center bg-1 py-2">
+      <h2 class="text-light">
+        <strong
+          >Voici un formulaire pour créer une association sur notre site</strong
+        >
+      </h2>
+      <h4 class="text-light">
+        Entrez le numero RNA de votre association dans le formulaire qui suit !
+      </h4>
+
+      <form class="text-5" action="" method="post">
+        {% csrf_token %}
+        <label for="RNA" class="form-label"
+          >Numéro RNA de l'association :
+        </label>
+        <input
+          id="RNA"
+          type="text"
+          name="RNA"
+          maxlength="10"
+          class="form-control mb-3"
+        />
+        <input type="submit" class="btn btn-secondary" value="Creer un site" />
+      </form>
+    </div>
+
+    <div class="col-12 bg-body py-3">
+      <span></span>
+    </div>
+
+    {% if asso %}
+    <div class="col-12 text-center bg-1 py-2">
+      <h2 class="text-light">
+        <strong>Liste des associations existantes :</strong>
+      </h2>
+      <div class="list-group bg-1">
+        {% for assos in asso %}
+        <a
+          href="../{{ assos.id }}/accueil"
+          class="list-group-item list-group-item-action bg-1 text-4"
+          >{{assos.name}}</a
+        >
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

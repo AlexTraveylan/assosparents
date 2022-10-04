@@ -1,0 +1,94 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 py-3 text-center bg-1">
+      <h2 class="text-light">
+        <strong>Configuration des paramètres de l'association</strong>
+      </h2>
+    </div>
+
+    <div class="col-12 py-3 text-center">
+      {% load static %}
+      <img
+        class="rounded mx-auto d-block"
+        src="{% static 'bemember.png' %}"
+        height="200px"
+      />
+    </div>
+
+    <div class="col-12 py-3 px-0 text-center">
+      <form
+        class="bg-1 p-3 text-light"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        {% csrf_token %} {{ form.as_p }}
+        <input
+          class="btn btn-secondary"
+          name="btn-setasso"
+          type="submit"
+          value="Modifier l'association"
+        />
+      </form>
+    </div>
+
+    <div id="gerer_permission" class="col-12 py-3 text-center">
+      {% load static %}
+      <img
+        class="rounded mx-auto d-block"
+        src="{% static 'grow.png' %}"
+        height="200px"
+      />
+    </div>
+
+    <div class="col-12 text-center bg-1 py-2">
+      <h3 class="text-light">
+        <strong>Gerer les permissions des membres</strong>
+      </h3>
+      {% for member in members %}
+      <form action="#gerer_permission" method="post">
+        <input
+          type="hidden"
+          name="upgrade_perm"
+          value="{{member.0.username}}"
+        />
+        <p class="text-light mt-5">
+          {{ member.0first_name }} {{ member.0.last_name }}
+          ({{member.0.username}})
+        </p>
+        {% csrf_token %}
+        <button class="btn text-{{member.2}}">{{member.1}}</button>
+      </form>
+      {% endfor %}
+    </div>
+
+    <div class="col-12 py-3 text-center">
+      {% load static %}
+      <img
+        class="rounded mx-auto d-block"
+        src="{% static 'delete.png' %}"
+        height="200px"
+      />
+    </div>
+
+    <div class="col-12 bg-2 text-center py-3">
+      <h4 class="text-5">
+        <strong
+          >ALERTE : Suppression definitive de toutes les données de
+          l'association sur le site</strong
+        >
+      </h4>
+      <form action="" method="post">
+        {% csrf_token %}
+        <input
+          name="suppasso"
+          class="btn btn-danger mt-3"
+          type="submit"
+          value="Supprimer l'association"
+        />
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

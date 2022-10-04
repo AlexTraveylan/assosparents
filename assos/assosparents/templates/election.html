@@ -1,0 +1,84 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 text-center py-3 bg-1">
+      <h2 class="text-light"><strong>Identification du président</strong></h2>
+      <h6 class="text-light"><em>{{asso.name}}</em></h6>
+    </div>
+
+    <div class="row">
+      {% load static %}
+      <div class="col-12 py-2">
+        <img
+          class="rounded mx-auto d-block"
+          src="{% static 'election.png' %}"
+          height="200px"
+        />
+      </div>
+    </div>
+
+    {% if results %}
+    <div class="col-12 text-center bg-1 py-3">
+      <h4 class="text-light py-2">
+        <strong>Vote pour identifier le président de l'association</strong>
+      </h4>
+      {% for result in results %}
+      <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="target" value="{{result.0.username}}" />
+
+        <button type="submit" class="btn btn-secondary position-relative">
+          {{result.0.first_name}} {{result.0.last_name}}
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-5"
+          >
+            {{result.1}}
+          </span>
+        </button>
+      </form>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="col-12 py-3">
+      <span></span>
+    </div>
+
+    <div class="col-12 text-center bg-1 py-3">
+      <h3 class="text-light">
+        <strong>Fin du vote possible sous certaines conditions :</strong>
+      </h4>
+      <h6 class="text-light">- Au minimum 3 membres ont voté</h6>
+      <h6 class="text-light">- Au moins la moitié des membres ont voté</h6>
+      <form class="py-2" action="" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="EndVote" value="clicked" />
+        <button type="submit" class="btn btn-warning">
+          Mettre fin au vote
+        </button>
+        <p class="text-5">{{ message }}</p>
+      </form>
+    </div>
+
+    {% if role > 3 %}
+
+    <div class="col-12 py-3">
+      <span></span>
+    </div>
+
+    <div class="col-12 text-center bg-1 py-3">
+      <h4 class="text-5"><strong>Attention, action irréversible : reinitialiser tous les rôles, perdre le rôle de président et lancer le vote pour un nouveau président :</strong></h4>
+      <h6 class="text-4"><em>MESSAGE UNIQUEMENT VISIBLE PAR LE PRÉSIDENT</em></h6>
+      <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="reinitialiser" value="confirme">
+        <button type="submit" class="btn btn-danger">DÉMISSIONNER</button>
+      </form>
+    </div>
+    {% endif %}
+
+
+  </div>
+</div>
+{% endblock %}

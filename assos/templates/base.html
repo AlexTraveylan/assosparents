@@ -1,0 +1,202 @@
+{% load static %}
+<html>
+  <head>
+    <title>Assos parents</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <link href="{% static 'styles.css' %}" rel="stylesheet" />
+    <link rel="icon" href="{{ asso.minilogo.url }}" />
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-xl navbar-light bg-body fixed-top">
+      <div class="container-fluid">
+        {% if asso.id != null %}
+        <a class="navbar-brand me-4" href="{% url 'accueil' asso.id %}">Accueil</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        {% endif %}
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            {% if asso.id != null %}
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Événements
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="{% url 'eventnow' asso.id %}"
+                    >Evenements en cours</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'eventpast' asso.id %}"
+                    >Evenements passés</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'eventdurate' asso.id %}"
+                    >Evenements permanent</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'bemember' asso.id %}"
+                >Devenir membre</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'ressources' asso.id %}"
+                >Ressources</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'conseilsecole' asso.id %}"
+                >Conseils d'école</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'donate' asso.id %}"
+                >Donations</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'partenaires' asso.id %}"
+                >partenaires</a
+              >
+            </li>
+            {% if role and role > 2 %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'setting_asso' asso.id %}"
+                >Setting</a
+              >
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'election' asso.id %}"
+                >Election</a
+              >
+            </li>
+            {% endif %}
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+              Gestion du compte
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="{% url 'photoprofil_upload' %}"
+                    >Changer la photo de profil</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'passwordchange' %}"
+                    >Changer de mot de passe</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="{% url 'logout' %}"
+                    >Se deconnecter</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        
+      </div>
+    </nav>
+  {% block content %}{% endblock %}
+
+    <!-- Bandeau de profil -->
+    {% if user.is_authenticated %}
+    <session class="sidebar">
+      <h1><strong> Assos de parents </strong> :</h1>
+      <p>Salut {{ user }}.</p>
+      {% if user.profile_photo %}
+      <img class="avatar" src="{{ user.profile_photo.url }}" />
+      {% else %}
+      <p>Pas de photo de profil</p>
+      {% endif%}
+      <a href="{% url 'index' %}">Index</a><br />
+      <a href="{% url 'photoprofil_upload' %}">Changer la photo de profil</a
+      ><br />
+      <a href="{% url 'passwordchange' %}">Changer de mot de passe</a><br />
+      <a href="{% url 'logout' %}">Se déconnecter</a><br />
+      <p>Vous avez rejoint :
+      <ul>
+      {% for assos in user.asso.all %}
+          <li><a href="../{{assos.id}}/accueil">{{ assos.name }}</a></li>
+          {% empty %}
+          Aucune association rejointe
+      {% endfor %}
+      </ul>
+      </p>
+    </session>
+    {% else %}
+    <session class="sidebar">
+      <h1><strong> Assos de parents </strong> :</h1>
+      <a href="{%url 'login' %}">Connectez vous</a><br>
+      <a href="{% url 'signup' %}">Creer un compte</a>
+    </session>
+    {% endif %}
+
+    <footer>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 bg-body text-center p-5">
+            {% if asso.id != null %}
+            <h6>{{ asso.shortname }}  {% now 'Y' %}</h6>
+              {% if asso.email %}
+            <h6>Nous contacter : {{ asso.email }}</h6>
+              {% endif %}
+            {% else %}
+            <h6>Site crée par 
+              Timothée DEMARES </h6>
+            <h6>Open source, visitez mon github pour le code source : https://github.com/AlexTraveylan</h6>
+            <h6>{% now 'D d M Y' %}</h6>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"
+  ></script>
+</html>

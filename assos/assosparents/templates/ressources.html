@@ -1,0 +1,101 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 bg-1 py-3 text-center">
+      <h2 class="text-light">
+        <strong>Ressources partagées : liens et documents</strong>
+      </h2>
+      <h6 class="text-light"><em>{{asso.name}}</em></h6>
+      {% if role > 2 %}
+      <a class="text-4" href="{% url 'ressources_create' asso.id %}"
+        >Ajouter une ressource</a
+      >
+      {% endif %}
+    </div>
+
+    {% load static %}
+    <div class="col-12 py-2 text-center">
+      <img
+        class="rounded mx-auto d-block"
+        src="{% static 'ressources.png' %}"
+        height="200px"
+      />
+    </div>
+
+    {% if datas %} {% for data in datas %}
+    <div id="{{data.0.id}}ressource" class="col-12 bg-body py-3">
+      <span></span>
+    </div>
+
+    <div class="col-12 bg-1 py-3 text-center">
+      <h4 class="text-3 mb-3">
+        <strong>{{ data.0.title }} (niveau : {{data.0.niveau}})</strong>
+      </h4>
+
+      {% if data.0.link %}
+      <p>
+        <a class="text-5" href="{{ data.0.link }}" target="_blank">Lien ici</a>
+      </p>
+      {% elif data.0.file %}
+      <p>
+        <a class="text-5" href="{{ data.0.file.url }}" target="_blank"
+          >Fichier ici</a
+        >
+      </p>
+      {% endif %}
+      <p class="text-light">{{ data.0.description}}</p>
+      {% if role > 2 %}
+      <p>
+        <a
+          class="text-4 fs-micro"
+          href="{% url 'ressources_edit' asso.id data.0.id %}"
+          >Modifier</a
+        >
+      </p>
+      {% endif %} {% if role > 1 %}
+      <form action="#{{data.0.id}}ressource" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="ressource_id" value="{{data.0.id}}" />
+        <button type="submit" name="like" class="btn bg-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-check-lg {{data.2.0}}"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"
+            />
+          </svg>
+          <span class="badge bg-secondary">{{data.1.0}}</span>
+        </button>
+        <button type="submit" name="unlike" class="btn bg-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-trash {{data.2.1}}"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
+            />
+            <path
+              fill-rule="evenodd"
+              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+            />
+          </svg>
+          <span class="badge bg-secondary">{{data.1.1}}</span>
+        </button>
+      </form>
+      {% endif %}
+    </div>
+    {% endfor %} {% endif %}
+  </div>
+</div>
+
+{% endblock %}

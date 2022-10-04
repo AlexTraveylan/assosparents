@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% block content %}
+
+<h2>about us de l'asso {{asso.name}}</h2>
+
+<form action="" method="post">
+  {% csrf_token %}
+  <input name="suppasso" type="submit" value="Supprimer l'association" />
+</form>
+
+{% endblock %}

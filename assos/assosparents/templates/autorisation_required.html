@@ -1,0 +1,40 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 text-center py-3 bg-1">
+      <h2 class="text-light">
+        <strong
+          >Page pour les gens qui essayent de contourner les règles.</strong
+        >
+      </h2>
+      <h6 class="text-light"><em>{{asso.name}}</em></h6>
+    </div>
+
+    <div class="col-12 py-3 text-center">
+      {% load static %}
+      <img
+        class="rounded mx-auto d-block"
+        src="{% static 'warning.png' %}"
+        height="200px"
+      />
+    </div>
+
+    <div class="col-12 text-center bg-1 text-light p-3">
+      <h4 class="text-5"><strong>Vous n'avez pas la permission !</strong></h4>
+      <p class="text-light">
+        Vous n'avez pas les droits requis pour acceder à cette page. Seul le
+        président de l'association peut vous les donner. <br />
+        A l'avenir, merci d'utiliser uniquement les liens à votre disposition.
+        <br />
+        Ca ne coute rien de le dire ... Je ne le ferais pas moi même :)
+      </p>
+      <p>
+        <a class="text-4" href="{% url 'accueil' asso.id %}"
+          >Retourner à l'accueil</a
+        >
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

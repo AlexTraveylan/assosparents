@@ -1,0 +1,70 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 text-center bg-1 py-3">
+      <h2 class="text-light">
+        <strong>Comptes rendus des conseils d'école</strong>
+      </h2>
+      <h5 class="text-light"><em>{{asso.name}}</em></h5>
+      {% if role > 2 %}
+      <a class="text-4" href="{% url 'conseilsecole_create' asso.id %}"
+        >Ajouter un compte rendu</a
+      >
+      {% endif %}
+    </div>
+
+    <div class="row">
+      {% load static %}
+      <div class="col-12">
+        <img
+          class="rounded mx-auto d-block"
+          src="{% static 'meeting.png' %}"
+          height="200px"
+        />
+      </div>
+    </div>
+
+    {% if datas %} {% for data in datas %}
+
+    <div class="row">
+      <div class="col p-3">
+        <span></span>
+      </div>
+    </div>
+
+    <div class="col-12 text-center bg-1 py-3">
+      <h3 class="text-light"><strong>Compte rendu #{{ data.id }}</strong></h3>
+      <h6 class="bg-1 text-5">La réunion s'est déroulé le {{ data.date }}</h6>
+      <p class="bg-1 text-light">
+        <strong>Resumé du conseil d'école :</strong><br />
+        {{ data.resume }}
+      </p>
+      {% if data.file != '' %}
+      <p class="bg-1 text-light">
+        <a class="text-4" href="{{ data.file.url }}">
+          Cliquez ici pour le compte rendu complet en pdf</a
+        >
+      </p>
+      {% endif %}
+      <p class="bg-1 text-3 fs-micro">
+        <strong>Ajouté par :</strong> {{ data.author }} le
+        {{data.time_published}}
+      </p>
+      {% if role > 2 %}
+      <a
+        class="text-4 fs-micro"
+        href="{% url 'conseilsecole_edit' asso.id data.id %}"
+        >Modifier</a
+      >
+      {% endif %}
+    </div>
+
+    {% endfor %} {% endif%}
+  </div>
+</div>
+{% endblock %}
+
+<div>
+  <p><u></u> :</p>
+</div>

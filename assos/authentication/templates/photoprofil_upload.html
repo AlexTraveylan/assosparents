@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 bg-1 text-light text-center py-3">
+      <h2><strong>Change ta photo de profil</strong></h2>
+    </div>
+    {% load static %}
+    <div class="col-12 py-2">
+      <img
+        class="rounded mx-auto d-block"
+        src="{% static 'selfie.png' %}"
+        height="200px"
+      />
+    </div>
+    <div class="col-12 py-3 bg-1 text-light text-center">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %} {{ form.as_p}}
+        <input
+          class="btn btn-secondary"
+          type="submit"
+          value="Changer de photo de profil"
+        />
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+body {
+    padding-top:100px !important;
+}
+.text-1 { color: rgba(19, 96, 82, 1); }
+.text-2 { color: rgba(67, 127, 62, 1); }
+.text-3 { color: rgba(179, 206, 101, 1); }
+.text-4 { color: rgba(255, 235, 92, 1); }
+.text-5 { color: rgba(255, 90, 50, 1); }
+
+.bg-1 { background-color: rgba(19, 96, 82, 1); }
+.bg-2 { background-color: rgba(67, 127, 62, 1); }
+.bg-3 { background-color: rgba(179, 206, 101, 1); }
+.bg-4 { background-color: rgba(255, 235, 92, 1); }
+.bg-5 { background-color: rgba(255, 90, 50, 1); }
+
+a{
+    text-decoration:none;    
+}
+
+.fs-micro{
+    font-size: 11px;
+}
+
+.sidebar {
+    height: 0; /* Full-height: remove this if you want "auto" height */
+    width: 0; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    top: 0; /* Stay at the top */
+    left: 0;
+    overflow-x: hidden;
+}
+
+@media (min-width:1101px) {
+/* The sidebar menu */
+.sidebar {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 300px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: rgba(19, 96, 82, 1);
+    color:  #ffffe6;
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* The navigation menu links */
+.sidebar a {
+    text-decoration: none;
+    color:  #ffffe6;
+    display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+/* Style page content */
+body {
+    margin-left: 300px; /* Same as the width of the sidebar */
+    padding: 20px;
+}
+
+nav {
+    margin-left: 320px;
+}
+
+.avatar {
+    width: 80%;
+    border-radius: 10%;
+    display: block;
+    margin: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+}

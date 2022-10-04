@@ -1,0 +1,67 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 bg-1 py-3 text-center">
+      <h2 class="text-light"><strong>Nos partenaires</strong></h2>
+      <h6 class="text-light"><em>{{asso.name}}</em></h6>
+      {% if role > 2 %}
+      <a class="text-4" href="{% url 'partenaires_create' asso.id %}"
+        >Ajouter un partenaria</a
+      >
+      {% endif %}
+    </div>
+
+    {% load static %}
+    <div class="col-12 py-2 text-center">
+      <img
+        class="rounded mx-auto d-block"
+        src="{% static 'bemember.png' %}"
+        height="200px"
+      />
+    </div>
+
+    {% if datas %} {% for data in datas %}
+    <div class="col-12 bg-body py-3">
+      <span></span>
+    </div>
+
+    <div class="col-12 bg-1 py-3 text-center">
+      <h4 class="text-3 mb-3">
+        <strong>{{ data.entreprise }}</strong>
+      </h4>
+
+      {% if data.link %}
+      <p>
+        <a class="text-5" href="{{ data.link }}"
+          ><img
+            src="{{ data.logo.url }}"
+            width="200px"
+            style="border-radius: 20px"
+        /></a>
+      </p>
+      {% else %}
+      <p>
+        <img
+          src="{{ data.logo.url }}"
+          width="200px"
+          style="border-radius: 20px"
+        />
+      </p>
+      {% endif %} {% if data.promo_text %}
+      <p class="text-light">{{ data.promo_text}}</p>
+      {% endif %} {% if role > 2 %}
+      <p>
+        <a
+          class="text-4 fs-micro"
+          href="{% url 'partenaires_edit' asso.id data.id %}"
+          >Modifier</a
+        >
+      </p>
+      {% endif %}
+    </div>
+    {% endfor %} {% endif %}
+  </div>
+</div>
+
+{% endblock %}
