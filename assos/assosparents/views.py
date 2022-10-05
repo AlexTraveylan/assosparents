@@ -1,4 +1,3 @@
-from ast import Delete
 from django.shortcuts import render, redirect
 from assosparents.models import *
 from authentication.models import *
